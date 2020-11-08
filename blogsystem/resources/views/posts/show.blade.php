@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-
     <div class="row">
 
       <!-- Post Content Column -->
@@ -63,7 +62,9 @@
             <h5 class="mt-0">{{$comment->finduser($comment->user_id)->name}}</h5>
             <div>
             <p>{{$comment->comment}}</p>
-            <a href="/home/posts/{{$posts->id}}/{{$comment->id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+            @if(auth()->user()->id==$comment->user_id)
+            <form method="POST" action="/home/posts/{{$posts->id}}"> @csrf @method('DELETE')<button name="comme_id" value="{{$comment->id}}"type="submit" class="btn btn-danger">Delete</button></form>
+            @endif
             </div>
           </div>
         </div>

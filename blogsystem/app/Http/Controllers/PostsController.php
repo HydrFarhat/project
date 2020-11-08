@@ -11,10 +11,19 @@ use App\Like;
 class PostsController extends Controller
 {
     
+    public function guestindex(){
+
+        $post=Post::latest()->paginate(4);
+
+        return view('welcome',['posts'=>$post]);
+
+
+    }
 
     public function index(){
 
         $post=Post::latest()->paginate(4);
+
 
 
        return view('posts.index',['posts'=>$post]);
@@ -106,7 +115,7 @@ class PostsController extends Controller
     public function destroycomment($cid){
         
         $id=Route::current()->Parameter('post');
-        $cid=Route::current()->Parameter('comment');
+        $cid=request('comme_id');
         $post=Post::find($id);
         $comment=Comment::findOrFail($cid);
         $comment->delete();
@@ -116,14 +125,15 @@ class PostsController extends Controller
 
     public function storelike(Post $post){
 
-        $posts=Post::find($post->id);
+        // $posts=Post::find($post->id);
+         $posts=Post::latest()->paginate(4);
         
         $like= new Like();
         $like->user_id = auth()->user()->id;
-        $like->post_id = $post->id;
+        $like->post_id = request('post_id');
         $like->save();
 
-        return view('home');
+     return view('posts.index',['posts'=>$posts]);
     }
  public function destroylike($id){
 

@@ -34,7 +34,7 @@
                                     <script src="{{asset('js/main.js')}}" type="text/javascript"></script>
 
                                         
-                                       @else <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1"><a href="/home/{{$post->id}}"><button class="btn btn-primary" >Like</button></a></span></div>
+                                       @else <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1"><form method="POST" action="/home/posts"> @csrf @method('PUT')<button name="post_id" value="{{$post->id}}"type="submit"class="btn btn-primary" >Like</button></form></span></div>
 
                                          @endif 
                                           <p>{{$post->getlikes($post)}}</p>
